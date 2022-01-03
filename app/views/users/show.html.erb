@@ -1,0 +1,70 @@
+<%= stylesheet_link_tag 'users_show', :media => "all" %></br>
+<%= image_tag@user.image_url,size:"250×250" ,class: "user-image"if @user.image? %>
+<% if current_user.id == @user.id %>
+    <%= link_to "編集する", edit_user_registration_path %>
+<% end %>
+
+<% if @user.id == current_user.id %>
+
+<% else %>
+  <% if @isRoom == true %>
+    <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
+  <% else %>
+    <%= form_for @room do |f| %>
+      <%= fields_for @entry do |e| %>
+        <%= e.hidden_field :user_id, :value=> @user.id %>
+      <% end %>
+      <%= f.submit "チャットを始める" %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<div class ="posts" >
+    <% @user.instagrams.each do |t| %>
+        <div class="card">
+            <%= image_tag t.image_url,:class => "image" if t.image? %>
+            <div class="card-body">
+                <div class="card-title">
+                    <%= image_tag t.user.image_url,size:"50×100" if t.user.image?%>
+                    <a href="/users/<%= t.user.id %>"><%= t.user.name %></a>
+                </div>
+                <div class="card-text">
+                    <%= t.body %></br>
+                    <%= link_to instagram_path(t.id), method: :get do%>
+                        <i class="fas fa-info-circle"></i>
+                    <% end %>
+                    <% if user_signed_in? && current_user.id == t.user_id %>  
+                        <%= link_to edit_instagram_path(t.id), method: :get do %>
+                            <i class="fas fa-edit"></i>
+                        <% end %>
+                        <%= link_to instagram_path(t.id), method: :delete  do %>
+                            <i class="fas fa-trash-alt"></i></br>
+                        <% end %>
+                    <% end %>
+
+                    <% if user_signed_in? %>
+                        <% if current_user.already_liked?(t) %>
+                            <%= link_to instagram_like_path(id: t.id, instagram_id: t.id), method: :delete do %>
+                                <i class="fas fa-heart"><%= t.likes.count %></i>
+                            <% end %>
+                        <% else %>
+                            <%= link_to instagram_likes_path(id: t.id, instagram_id: t.id), method: :post do %>
+                                <i class="far fa-heart"><%= t.likes.count %></i>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                    <i class="far fa-comment"><%= t.comments.count %></i></br>
+
+                    <% t.comments.limit(1).each do |c| %>
+                        <%= c.user.email %>
+                        <%= c.content %>
+                        <% if user_signed_in? && current_user.id == c.user_id %>  
+                            <%= link_to "削除する", instagram_comment_path(t,c.id), method: :delete %>
+                        <% end %>
+                    <% end %>
+
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>

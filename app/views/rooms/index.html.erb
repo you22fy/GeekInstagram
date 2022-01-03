@@ -1,0 +1,10 @@
+<%= stylesheet_link_tag 'rooms_index', :media => "all" %></br>
+
+<div class="list">
+  <% @anotherEntries.each do |e| %>
+      <%= link_to room_path(e.room.id) do %>
+        <%= image_tag e.user.image_url,size:"50×50",class: "user-image" if e.user.image? %>
+        <%= e.user.name %></br>
+      <% end %>
+  <% end %>
+</div>

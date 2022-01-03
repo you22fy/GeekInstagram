@@ -1,0 +1,29 @@
+form{
+    text-align: center;
+}
+
+.input-form{
+    background-color:rgb(247, 242, 242);
+    width:450px;
+    height:40px;
+    border-top:none;
+    border-left: none;
+    border-right: none;
+}
+input[type="email"]:focus{
+    border-bottom-color: lightskyblue;
+}
+input[type="password"]:focus{
+    border-bottom-color: lightskyblue;
+}
+
+.login-button{
+    margin-top:10px;
+    margin-bottom: 10px;
+    border: 0;
+    color:white;
+    background-color: deepskyblue;
+    width:450px;
+    height: 40px;
+    border-radius: 20px;
+}

@@ -1,0 +1,22 @@
+<%= stylesheet_link_tag 'users_login', :media => "all" %>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <i class="fab fa-twitter fa-2x" style = "color:deepskyblue;"></i>
+  <h4><b>Twitter</b> にログイン</h4>
+  <div class="field">
+    <%= f.label :メールアドレス%><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",class:"input-form" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :パスワード%><br />
+    <%= f.password_field :password, autocomplete: "current-password",class:"input-form" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "ログイン",class:"login-button" %>
+  </div>
+  <%= render "users/shared/links" %>
+<% end %>
+
+

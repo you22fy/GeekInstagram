@@ -1,0 +1,11 @@
+<%= stylesheet_link_tag 'instagrams_new', :media => "all" %></br>
+<%= form_for @post do |f| %>
+    <%= f.label :image, class: "far fa-image fa-4x" do %>
+        <%= f.file_field :image, style:"display:none;" %>
+    <% end %>
+    <%= f.label :body %>
+    <%= f.text_field :body, class:"text-field" %>
+
+    <%= f.submit "編集する" ,class:"send-button" %>
+<% end %>
+<%= link_to '一覧へ',instagrams_path %>
